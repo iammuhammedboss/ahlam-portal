@@ -14,11 +14,19 @@ fuser -k 3456/tcp 2>/dev/null || true
 
 cd "$APP_DIR"
 
+# Remove any prisma.config.ts that overrides DB URL
+rm -f "$APP_DIR/prisma.config.ts"
+
 # Copy .env.example to .env if .env doesn't exist
 if [ ! -f "$APP_DIR/.env" ]; then
   echo "Creating .env from .env.example..."
   cp "$APP_DIR/.env.example" "$APP_DIR/.env"
 fi
+
+# Load .env into shell so Prisma CLI can use DATABASE_URL
+set -a
+source "$APP_DIR/.env"
+set +a
 
 # Create uploads dir
 mkdir -p /var/data/adl-uploads
