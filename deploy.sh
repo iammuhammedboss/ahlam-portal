@@ -38,11 +38,11 @@ npm install
 # Prisma generate + push schema
 echo "Setting up database..."
 npx prisma generate
-npx prisma db push
+npx prisma db push --url "$DATABASE_URL"
 
 # Seed agent credentials
 echo "Seeding agent credentials..."
-npx tsx prisma/seed.ts
+DATABASE_URL="$DATABASE_URL" npx tsx prisma/seed.ts
 
 # Build Next.js
 echo "Building Next.js..."
