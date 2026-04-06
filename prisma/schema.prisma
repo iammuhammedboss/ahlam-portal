@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EnquiryStatus {
+  NEW
+  QUOTED
+  PENDING_CUSTOMER
+  CLOSED
+}
+
+enum SenderType {
+  AGENT
+  CUSTOMER
+}
+
+enum MessageType {
+  TEXT
+  FILE
+  INVOICE
+}
+
+model Enquiry {
+  id               Int            @id @default(autoincrement())
+  fullName         String
+  phone            String
+  email            String
+  pinHash          String
+  pinResetToken    String?        @unique
+  pinResetExpiry   DateTime?
+  status           EnquiryStatus  @default(NEW)
+  unreadByAgent    Boolean        @default(true)
+  unreadByCustomer Boolean        @default(false)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  lastMessageAt    DateTime       @default(now())
+
+  messages         Message[]
+
+  @@index([phone])
+  @@index([status])
+  @@index([lastMessageAt])
+}
+
+model Message {
+  id        Int         @id @default(autoincrement())
+  enquiryId Int
+  sender    SenderType
+  type      MessageType @default(TEXT)
+  content   String
+  fileName  String?
+  filePath  String?
+  fileSize  Int?
+  fileMime  String?
+  createdAt DateTime    @default(now())
+
+  enquiry   Enquiry     @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+
+  @@index([enquiryId, createdAt])
+}
+
+model RateLimit {
+  id          Int       @id @default(autoincrement())
+  identifier  String    @unique
+  attempts    Int       @default(0)
+  lockedUntil DateTime?
+  lastAttempt DateTime  @default(now())
+
+  @@index([identifier])
+}
