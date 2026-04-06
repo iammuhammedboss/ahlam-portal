@@ -64,6 +64,14 @@ model Message {
   @@index([enquiryId, createdAt])
 }
 
+model Agent {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  name      String   @default("Agent")
+  createdAt DateTime @default(now())
+}
+
 model RateLimit {
   id          Int       @id @default(autoincrement())
   identifier  String    @unique

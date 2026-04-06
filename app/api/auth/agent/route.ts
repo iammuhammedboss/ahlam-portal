@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { checkRateLimit, recordFailedAttempt, resetRateLimit } from "@/lib/rate-limit";
 
@@ -28,14 +29,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify credentials
-    const validUsername = username === process.env.AGENT_USERNAME;
-    const validPassword = await bcrypt.compare(
-      password,
-      process.env.AGENT_PASSWORD_HASH || ""
-    );
+    // Find agent in database
+    const agent = await prisma.agent.findUnique({
+      where: { username },
+    });
 
-    if (!validUsername || !validPassword) {
+    if (!agent) {
+      const result = await recordFailedAttempt(rateLimitId);
+      return NextResponse.json(
+        {
+          error: "Invalid credentials",
+          ...(result.locked && { retryAfter: result.retryAfter }),
+        },
+        { status: 401 }
+      );
+    }
+
+    const validPassword = await bcrypt.compare(password, agent.password);
+
+    if (!validPassword) {
       const result = await recordFailedAttempt(rateLimitId);
       return NextResponse.json(
         {
