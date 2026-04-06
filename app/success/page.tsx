@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/page-header";
 import { toast } from "sonner";
 
 function SuccessContent() {
@@ -32,11 +33,11 @@ function SuccessContent() {
   }
 
   return (
-    <Card className="max-w-md w-full">
-      <CardHeader className="text-center">
-        <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
+    <Card className="max-w-md w-full shadow-lg border-0">
+      <CardHeader className="text-center pb-2">
+        <div className="mx-auto mb-4 h-20 w-20 rounded-full bg-green-100 flex items-center justify-center">
           <svg
-            className="h-8 w-8 text-green-600"
+            className="h-10 w-10 text-green-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -53,17 +54,17 @@ function SuccessContent() {
       </CardHeader>
       <CardContent className="space-y-6 text-center">
         <div>
-          <p className="text-muted-foreground">Your Enquiry ID</p>
-          <p className="text-3xl font-bold">#{enquiryId}</p>
+          <p className="text-muted-foreground text-sm">Your Enquiry ID</p>
+          <p className="text-4xl font-bold text-primary mt-1">#{enquiryId}</p>
         </div>
 
-        <div className="bg-muted rounded-lg p-4">
-          <p className="text-sm text-muted-foreground mb-2">Your Unique PIN</p>
+        <div className="bg-primary/5 rounded-xl p-5 border border-primary/10">
+          <p className="text-sm text-muted-foreground mb-3">Your Unique PIN</p>
           <div className="flex items-center justify-center gap-3">
-            <p className="text-4xl font-bold tracking-[0.3em]">{pin}</p>
+            <p className="text-5xl font-bold tracking-[0.4em] text-foreground">{pin}</p>
             <button
               onClick={copyPin}
-              className="p-2 hover:bg-background rounded-md transition-colors"
+              className="p-2.5 hover:bg-white rounded-lg transition-colors border border-transparent hover:border-border"
               title="Copy PIN"
             >
               <svg
@@ -79,7 +80,7 @@ function SuccessContent() {
           </div>
         </div>
 
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
           <p className="text-sm text-yellow-800 font-medium">
             Please save this PIN. You will need it to log back in and track your enquiry.
           </p>
@@ -90,7 +91,7 @@ function SuccessContent() {
         </p>
 
         <Link href="/login/customer">
-          <Button className="w-full" size="lg">
+          <Button className="w-full h-12 text-base font-semibold" size="lg">
             Go to Login
           </Button>
         </Link>
@@ -101,15 +102,8 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b bg-white">
-        <div className="container mx-auto px-4 py-4">
-          <Link href="/" className="text-xl font-bold text-primary">
-            Ahlam Dhofar Logistics
-          </Link>
-        </div>
-      </header>
-
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary/5 via-background to-primary/10">
+      <PageHeader />
       <main className="flex-1 flex items-center justify-center px-4 py-8">
         <Suspense fallback={<div>Loading...</div>}>
           <SuccessContent />

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/page-header";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,17 +41,11 @@ export default function ForgotPinPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b bg-white">
-        <div className="container mx-auto px-4 py-4">
-          <Link href="/" className="text-xl font-bold text-primary">
-            Ahlam Dhofar Logistics
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary/5 via-background to-primary/10">
+      <PageHeader />
 
       <main className="flex-1 flex items-center justify-center px-4">
-        <Card className="max-w-sm w-full">
+        <Card className="max-w-sm w-full shadow-lg border-0">
           <CardHeader className="text-center">
             <CardTitle>Forgot PIN</CardTitle>
             <CardDescription>

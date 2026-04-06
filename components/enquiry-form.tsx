@@ -95,7 +95,7 @@ export function EnquiryForm() {
   }
 
   return (
-    <Card>
+    <Card className="shadow-lg border-0">
       <CardHeader>
         <CardTitle>Enquiry Details</CardTitle>
       </CardHeader>
@@ -109,6 +109,7 @@ export function EnquiryForm() {
               name="fullName"
               placeholder="Enter your full name"
               required
+              className="h-11"
             />
             {errors.fullName && (
               <p className="text-sm text-destructive">{errors.fullName}</p>
@@ -124,6 +125,7 @@ export function EnquiryForm() {
               type="tel"
               placeholder="+968 XXXX XXXX"
               required
+              className="h-11"
             />
             {errors.phone && (
               <p className="text-sm text-destructive">{errors.phone}</p>
@@ -139,6 +141,7 @@ export function EnquiryForm() {
               type="email"
               placeholder="your@email.com"
               required
+              className="h-11"
             />
             {errors.email && (
               <p className="text-sm text-destructive">{errors.email}</p>

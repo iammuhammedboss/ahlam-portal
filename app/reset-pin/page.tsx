@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -141,14 +142,8 @@ function ResetPinContent() {
 
 export default function ResetPinPage() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b bg-white">
-        <div className="container mx-auto px-4 py-4">
-          <Link href="/" className="text-xl font-bold text-primary">
-            Ahlam Dhofar Logistics
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-primary/5 via-background to-primary/10">
+      <PageHeader />
 
       <main className="flex-1 flex items-center justify-center px-4">
         <Suspense fallback={<div>Loading...</div>}>
