@@ -7,7 +7,7 @@ import { initSocket } from "./lib/socket-server";
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const port = parseInt(process.env.PORT || "3000", 10);
+const port = parseInt(process.env.PORT || "3456", 10);
 
 app.prepare().then(() => {
   const httpServer = createServer((req, res) => {

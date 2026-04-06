@@ -35,6 +35,7 @@ AGENT_NOTIFICATION_EMAIL="jezz@ahlamdhofar.com"
 NEXT_PUBLIC_APP_URL="https://portal.ahlamdhofar.com"
 UPLOAD_DIR="/var/data/adl-uploads"
 MAX_FILE_SIZE_MB="15"
+PORT="3456"
 ENVEOF
 
 # Create uploads dir
@@ -64,7 +65,7 @@ nginx -t && systemctl reload nginx
 echo "Starting/restarting app..."
 pm2 delete adl-portal 2>/dev/null || true
 cd "$APP_DIR"
-pm2 start npm --name "adl-portal" -- start
+pm2 start npx --name "adl-portal" -- tsx server.ts
 pm2 save
 
 echo ""
